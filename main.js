@@ -10,11 +10,22 @@ function isPrime(number = Number(), previousPrimes = Array()){
     }
     return true
 }
+
 var primesFound = []
 var currentScan = 2
+var primesFoundSinceLastUpdate = 0
+var secondsPassed = 0
+
+setInterval(() => {
+    var toSend = "Found "+primesFoundSinceLastUpdate+" new primes with "+secondsPassed+" seconds passed."
+    console.log(toSend)
+    secondsPassed++
+    primesFoundSinceLastUpdate = 0
+}, 1000)
+
 while(true){
     if(isPrime(currentScan, primesFound)){
-        console.log("FOUND PRIME "+currentScan)
+        primesFoundSinceLastUpdate++
         primesFound.push(currentScan)
     }
     currentScan++
