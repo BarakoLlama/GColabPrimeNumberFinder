@@ -29,7 +29,7 @@ while(true){
         var stack = Math.floor((Date.now() - lastTime) / 1000)
         secondsPassed = secondsPassed + stack
         var speed = (numbersSinceLastUpdate / (stack*1000)).toFixed(2)
-        console.log("Found "+primesFoundSinceLastUpdate+" new primes with "+secondsPassed+" seconds passed. Speed: "+speed+"knum/s, Total: "+primesFound.length)
+        console.log("Found "+primesFoundSinceLastUpdate+" new primes with "+secondsPassed+" seconds passed. Speed: "+speed+"knum/s, Total: "+primesFound.length+", Scanned so far: "+currentScan)
         primesFoundSinceLastUpdate = 0
         numbersSinceLastUpdate = 0
         lastTime = now
