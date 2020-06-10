@@ -1,3 +1,5 @@
+const fs = require('fs')
+
 function isPrime(number = Number(), previousPrimes = Array()){
     // Shortcut
     previousPrimes.forEach(function(prime){
@@ -33,6 +35,7 @@ while(true){
         primesFoundSinceLastUpdate = 0
         numbersSinceLastUpdate = 0
         lastTime = now
+        fs.writeFileSync("./primes.txt", (primesFound.toString()))
     }
     currentScan++
 }
