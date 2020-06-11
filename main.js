@@ -1,16 +1,26 @@
 const fs = require('fs')
 
 function isPrime(number = Number(), previousPrimes = Array()){
-    // Shortcut
-    previousPrimes.forEach(function(prime){
-        if(number%prime == 0){return false}
-    })
-    var numberPart = number - 1
-    while(numberPart > 1){
+    // Shortcuts
+    if(number > 9){
+        var clc = String(number)
+        if(clc.endsWith("0")){return false}
+        if(clc.endsWith("2")){return false}
+        if(clc.endsWith("4")){return false}
+        if(clc.endsWith("5")){return false}
+        if(clc.endsWith("6")){return false}
+        if(clc.endsWith("8")){return false}
+    }
+    var numberMax = number - 1
+    var numberPart = 2
+    while(numberPart <= numberMax){
         if(number%numberPart == 0){return false}
-        numberPart--
+        numberPart++
     }
     return true
+}
+async function asyncSave(pfound){
+    fs.writeFileSync("./primes.txt", pfound.toString())
 }
 
 var primesFound = []
@@ -19,8 +29,12 @@ var primesFoundSinceLastUpdate = 0
 var numbersSinceLastUpdate = 0
 var secondsPassed = 0
 var lastTime = Date.now()
+var maxScan = Infinity
 
-while(true){
+if(process.argv[2] !== undefined){currentScan = Number(process.argv[2])}
+if(process.argv[3] !== undefined){maxScan = Number(process.argv[3])}
+
+while(currentScan <= maxScan){
     if(isPrime(currentScan, primesFound)){
         primesFoundSinceLastUpdate++
         primesFound.push(currentScan)
@@ -35,7 +49,8 @@ while(true){
         primesFoundSinceLastUpdate = 0
         numbersSinceLastUpdate = 0
         lastTime = now
-        fs.writeFileSync("./primes.txt", (primesFound.toString()))
+        asyncSave(primesFound)
     }
     currentScan++
 }
+fs.writeFileSync("./primes.txt", primesFound.toString())
